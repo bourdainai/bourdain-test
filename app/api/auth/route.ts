@@ -13,11 +13,18 @@ export async function GET(request: Request) {
   const redirectUri = `${process.env.HOST}/api/auth/callback`;
   const nonce = Date.now().toString();
   
+  // Log the redirect URI for debugging
+  console.log('Redirect URI:', redirectUri);
+  console.log('HOST env:', process.env.HOST);
+  
   const authUrl = `https://${shop}/admin/oauth/authorize?` +
     `client_id=${process.env.SHOPIFY_API_KEY}` +
     `&scope=${scopes}` +
     `&redirect_uri=${encodeURIComponent(redirectUri)}` +
     `&state=${nonce}`;
+
+  // Log the full auth URL for debugging
+  console.log('Full Auth URL:', authUrl);
 
   // Redirect to Shopify OAuth
   return NextResponse.redirect(authUrl);
